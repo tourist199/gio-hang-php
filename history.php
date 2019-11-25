@@ -36,7 +36,7 @@ if (isset($_SESSION["username"]))
           </a>
         </div>
         
-        <?php include_once("components/carts.php") ?>
+        <?php include_once("components/bills.php") ?>
 
       </div>
     </div>

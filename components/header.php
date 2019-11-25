@@ -30,4 +30,5 @@
    include_once("./models/Category.php");
    include_once("./models/Products.php");
    include_once("./models/Cart.php");
+   include_once("./models/Bill.php");
 ?>

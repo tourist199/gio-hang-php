@@ -36,7 +36,7 @@ class Bill{
         $lsBills = array();
         if($result->num_rows > 0){
             while ($row = $result->fetch_assoc()) {//biên nó thành 1 mảng kết hợp
-                $bill = new Bill($row["id"],$row["name"],$row["price"],$row["quantity"],$row["image"],$row["data"]);
+                $bill = new Bill($row["id"],$row["name"],$row["price"],$row["quantity"],$row["image"],$row["date"]);
                 array_push($lsBills,$bill);
             }
         }
