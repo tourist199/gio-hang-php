@@ -19,6 +19,11 @@
                            <p class="nav-link">Cart (<?php echo Cart::getAmountCarts()?>)</p>
                         </li>
                      </a>
+                     <a href="history.php">
+                        <li class="nav-item">
+                           <p class="nav-link">History</p>
+                        </li>
+                     </a>
                   <?php 
                      }
                   ?>

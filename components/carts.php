@@ -47,7 +47,7 @@
                                 <td>
                                     <h4><strong><?php echo Cart::getTotalPriceCarts()?>$</strong></h4>
                                 </td>
-                                <td colspan="3"><button type="button" class="btn btn-primary waves-effect waves-light">Complete purchase<i class="fa fa-angle-right right"></i></button></td>
+                                <td colspan="3"><a href="checkoutbill.php"> <div type="button" class="btn btn-primary waves-effect waves-light">Complete purchase<i class="fa fa-angle-right right"></i></div> </a></td>
                             </tr>
                         </tbody>
                     </table>

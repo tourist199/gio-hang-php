@@ -6,15 +6,17 @@ class Cart{
     var $price;
     var $quantity;
     var $image;
+    var $id_product;
 
     #Construct function
-    function Cart($id , $name, $price, $quantity, $image)
+    function Cart($id , $name, $price, $quantity, $image, $id_product)
     {
         $this->id = $id;
         $this->name = $name;
         $this->price = $price;
         $this->quantity = $quantity;
         $this->image = $image;
+        $this->id_product = $id_product;
     }
     
 
@@ -29,12 +31,12 @@ class Cart{
         $con = Cart::connect();
         //b2: thao tác với csdl : CRUD
         $un = $_SESSION['username'];
-        $sql = "SELECT carts.id,products.name, products.price, carts.quantity, products.image FROM carts inner join products on carts.id_product = products.id WHERE carts.username = '$un'";
+        $sql = "SELECT carts.id,products.name, products.price, carts.quantity, products.image, products.id as 'id_product' FROM carts inner join products on carts.id_product = products.id WHERE carts.username = '$un'";
         $result =  $con->query($sql);
         $lsCarts = array();
         if($result->num_rows > 0){
             while ($row = $result->fetch_assoc()) {//biên nó thành 1 mảng kết hợp
-                $cat = new Cart($row["id"],$row["name"],$row["price"],$row["quantity"],$row["image"]);
+                $cat = new Cart($row["id"],$row["name"],$row["price"],$row["quantity"],$row["image"],$row["id_product"]);
                 array_push($lsCarts,$cat);
             }
         }
@@ -48,11 +50,11 @@ class Cart{
         $con = Cart::connect();
         //b2: thao tác với csdl : CRUD
         $un = $_SESSION['username'];
-        $sql = "SELECT carts.id,products.name, products.price, carts.quantity, products.image FROM carts inner join products on carts.id_product = products.id WHERE carts.username = '$un' and carts.id = $id";
+        $sql = "SELECT carts.id,products.name, products.price, carts.quantity, products.image, products.id as 'id_product' FROM carts inner join products on carts.id_product = products.id WHERE carts.username = '$un' and carts.id = $id";
         $result =  $con->query($sql);
         if($result->num_rows > 0){
             while ($row = $result->fetch_assoc()) {//biên nó thành 1 mảng kết hợp
-                $cat = new Cart($row["id"],$row["name"],$row["price"],$row["quantity"],$row["image"]);
+                $cat = new Cart($row["id"],$row["name"],$row["price"],$row["quantity"],$row["image"],$row["id_product"]);
                 return $cat;
             }
         }
@@ -136,6 +138,51 @@ class Cart{
         }
         //b3 : đóng kết nối
         $con->close();
+    }
+    static function addBill($item){
+        $con = Cart::connect();
+        //b2: thao tác với csdl : CRUD
+        $un = $_SESSION['username'];
+        $sql = "INSERT INTO `bills`( `id_product`, `quantity`, `date`, `username`) VALUES ('$item->id_product',$item->quantity,NOW(),'$un') ";
+        
+        if (mysqli_query($con, $sql)) {
+            echo "---------------------------------------------";
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($con);
+        }
+        //b3 : đóng kết nối
+        $con->close();
+    }
+    static function deleteBills(){
+        $con = Cart::connect();
+        //b2: thao tác với csdl : CRUD
+        $un = $_SESSION['username'];
+        $sql = "DELETE FROM `carts` WHERE username = '$un'";
+        
+        if (mysqli_query($con, $sql)) {
+            echo "";
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($con);
+        }
+        //b3 : đóng kết nối
+        $con->close();
+    }
+
+    static function checkOutBills(){
+        $con = Cart::connect();
+        //b2: thao tác với csdl : CRUD
+        $un = $_SESSION['username'];
+        $sql = "SELECT carts.id,products.name, products.price, carts.quantity, products.image, products.id as 'id_product' FROM carts inner join products on carts.id_product = products.id WHERE carts.username = '$un'";
+        $result =  $con->query($sql);
+        if($result->num_rows > 0){
+            while ($row = $result->fetch_assoc()) {//biên nó thành 1 mảng kết hợp
+                $cat = new Cart($row["id"],$row["name"],$row["price"],$row["quantity"],$row["image"],$row["id_product"]);
+                Cart::addBill($cat);
+            }
+        }
+        Cart::deleteBills();
+        $con->close();
+        //echo "<h4>kết nối thành công<h4>";
     }
 
     static function deleteCart($id){
