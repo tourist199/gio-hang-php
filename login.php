@@ -1,3 +1,28 @@
+<?php 
+    session_start();
+    if(isset($_SESSION["username"])) 
+        header("location:index.php");
+    
+    include_once("models/user.php");
+    $information = "";
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        $useName = $_REQUEST["username"];
+        $password = $_REQUEST["password"];
+        $user = User::authentication($useName,$password);
+        echo $useName;
+        echo $password;
+        if($user != null){
+            //$information = "đăng nhập thành công. Chào bạn : ".$user->fullName;
+            $_SESSION["user"] = serialize($user);
+            $_SESSION["name"] = $user->name;
+            $_SESSION["username"] = $useName;
+            header("location:index.php");
+        }
+        else{
+            $information = "Đăng nhập thất bại ^^ ";
+        }
+    }
+?>
 <html lang="en"><head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -82,11 +107,11 @@
             <div class="form-group">
                 <button type="submit" class="btn btn-primary login-btn btn-block">Sign in</button>
             </div>
-            <?php #  if(strlen($information) != 0) {?>
+            <?php   if(strlen($information) != 0) {?>
                 <div class="alert alert-warning" role="alert">
-                    <?php #echo $information; ?>
+                    <?php echo $information; ?>
                 </div>
-            <?php #} ?>
+            <?php } ?>
             <div class="clearfix">
                 <label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
                 <a href="#" class="pull-right">Forgot Password?</a>
