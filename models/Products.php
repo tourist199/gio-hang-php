@@ -89,5 +89,52 @@ class Products{
         return $Products;
     }
 
+    static function addProducts( $name, $price,$desc,$description, $star, $category_id, $image)
+    {
+        //session_start();
+        $con = Products::connect();
+        //$username = $_SESSION["username"];
+        
+            $sql= "INSERT INTO `products`( `name`, `price`, `desc`, `description`, `star`, `category_id`, `image`) VALUES ('$name','$price','$desc','$description','$star','$category_id','$image')";
+            if (mysqli_query($con, $sql)) {
+                echo "Thành công";
+            } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($con);
+            }
+        
+        $con->close();
+    }
+
+    static function deleteProduct($id){
+        $con = Products::connect();
+        //b2: thao tác với csdl : CRUD
+        $sql = "DELETE FROM `products` WHERE id = $id ";
+        if (mysqli_query($con, $sql)) {
+            echo "";
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($con);
+        }
+        //b3 : đóng kết nối
+        $con->close();
+    }
+
+    static function editProducts( $id,$name, $price,$desc,$description, $star, $category_id, $image)
+    {
+        //session_start();
+        $con = Products::connect();
+        //$username = $_SESSION["username"];
+        if ($image!=null)
+            $sql= "UPDATE `products` SET `name`='$name',`price`='$price',`desc`='$desc',`description`='$description',`star`='$star',`category_id`='$category_id',`image`='$image' WHERE id = $id";
+        else
+            $sql= "UPDATE `products` SET `name`='$name',`price`='$price',`desc`='$desc',`description`='$description',`star`='$star',`category_id`='$category_id' WHERE id = $id";
+            if (mysqli_query($con, $sql)) {
+                echo "Thành công";
+            } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($con);
+            }
+        
+        $con->close();
+    }
+
 }
 ?>

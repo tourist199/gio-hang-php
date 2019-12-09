@@ -19,7 +19,7 @@ foreach ($lsProducts as $key => $value) {
                 <p class="card-text"><?php echo $value->desc?></p>
             </div>
             <div class="card-footer box-flex">
-                <p style="color: #f1c40f">★★★☆☆</p>
+                <p style="color: #f1c40f"><?php for ($i=0;$i<5;$i++){ if ($i < $value->star) echo "★ "; else echo "☆ ";}  ?></p>
                 <a href="buy-product.php?id=<?php echo $value->id?>">
                     <div class="btn btn-danger btn-muahang">Mua hàng</div>
                 </a>
