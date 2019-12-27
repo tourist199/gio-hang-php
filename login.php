@@ -15,6 +15,7 @@
             //$information = "đăng nhập thành công. Chào bạn : ".$user->fullName;
             $_SESSION["user"] = serialize($user);
             $_SESSION["name"] = $user->name;
+            $_SESSION["admin"] = $user->admin;
             $_SESSION["username"] = $useName;
             header("location:index.php");
         }

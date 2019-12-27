@@ -1,8 +1,12 @@
-<?php
-if (isset($_SESSION["username"]))
-    header("location:index.php");
-?>
+
 <?php include_once("components/header.php") ?>
+
+<?php
+    if (!isset($_SESSION["username"]))
+        header("location:index.php");
+    if (  $_SESSION["admin"] != "1")
+        header("location:index.php");
+?>
 <div>
     <?php include_once("components/navbar.php") ?>
 
@@ -43,7 +47,9 @@ if (isset($_SESSION["username"]))
                                             <?php echo $value->id?>
                                         </td>
                                         <td>
-                                            <?php echo $value->name?>
+                                            <a href="product-detail.php?id=<?php echo $value->id?>">
+                                                <?php echo $value->name?>
+                                            </a>
                                         </td>
                                         <td>
                                             <?php echo $value->desc?>

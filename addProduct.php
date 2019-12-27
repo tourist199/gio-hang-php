@@ -13,5 +13,5 @@
     $image = $target_file;
 
     Products::addProducts( $name, $price,$desc,$description, $star, $category_id, $image);
-    // header("location:admin.php")
+    header("location:admin-products.php")
 ?>

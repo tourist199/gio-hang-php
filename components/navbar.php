@@ -42,14 +42,17 @@
                   <p class="nav-link">About</p>
                </li>
             </a>
-            <?php
-            if (isset($_SESSION["username"])) {
-               ?>
+            <?php if ( ( isset($_SESSION["admin"]) ) && $_SESSION["admin"] == "1"){?>
                <a href="admin-products.php">
                   <li class="nav-item">
                      <p class="nav-link">Products Manager</p>
                   </li>
                </a>
+            <?php }?>
+
+            <?php
+            if (isset($_SESSION["username"])) {
+               ?>
                <li class="nav-item">
                   <p class="nav-link">(Chào <?php echo $_SESSION["name"] ?>) <a href="logout.php">Logout</a></p>
                </li>

@@ -2,12 +2,14 @@
 class User{
     var $userName;
     var $password;
-    function User($userName , $password, $name )
+    var $name;
+    var $admin;
+    function User($userName , $password, $name, $admin )
     {
         $this->userName = $userName;
         $this->password = $password;
         $this->name = $name;
-
+        $this->admin = $admin;
     }
     /**
      * xác thực người sử dụng
@@ -33,7 +35,7 @@ class User{
         $result =  $con->query($sql);
         if ($result->num_rows > 0){
             $row = $result->fetch_assoc();
-            $user = new user($row["username"],$row["password"],$row["name"]);
+            $user = new user($row["username"],$row["password"],$row["name"],$row["admin"]);
             return $user;
         }
         return null;
