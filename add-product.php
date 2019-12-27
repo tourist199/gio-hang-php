@@ -13,7 +13,7 @@ if (isset($_SESSION["username"]))
         $lsProducts = Products::getListProductsFromDB();
     ?>
     <div class="container">
-
+    
         <div style="min-height:78vh">
             <br>
             <h1 class="display-3">Add Product</h1> <br>
